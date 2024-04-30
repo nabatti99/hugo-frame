@@ -1,0 +1,27 @@
+.container {
+    position: relative;
+
+    .cropper-container {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: 0.2s;
+
+        * {
+            transition: unset;
+        }
+
+        cropper-canvas {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .viewer-container {
+        width: 40rem;
+        height: 40rem;
+    }
+}

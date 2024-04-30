@@ -8,3 +8,4 @@ export * from "./seo";
 export * from "./payment-method";
 export * from "./input-quantity";
 export * from "./empty-list";
+export * from "./upload";

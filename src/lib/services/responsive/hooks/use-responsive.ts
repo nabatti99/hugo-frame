@@ -1,7 +1,7 @@
-import { Breakpoint } from "@radix-ui/themes/dist/cjs/props";
+import { Responsive } from "@radix-ui/themes/dist/cjs/props";
 import { useAppSelector } from "@store";
 
-export const useResponsive = (value: Partial<Record<Breakpoint, any>>) => {
+export const useResponsive = (value: Responsive<any>) => {
     const breakpoints = useAppSelector((state) => state.responsive.breakpoints);
 
     if (value.xl && breakpoints.includes("xl")) return value.xl;

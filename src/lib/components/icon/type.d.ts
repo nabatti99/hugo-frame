@@ -1,5 +1,5 @@
-import { TextProps } from "@radix-ui/themes/dist/cjs/components/text";
+import { TextProps } from "@radix-ui/themes";
 
-export type IconProps = Omit<TextProps, "as", "asChild"> & {
-	ri: string;
+export type IconProps = Omit<TextProps, "as" | "asChild"> & {
+    ri: string;
 };

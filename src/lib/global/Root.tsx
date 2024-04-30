@@ -20,10 +20,10 @@ register();
 export const Root = () => {
     return (
         <MotionConfig transition={{ duration: 0.3 }}>
-            <Theme accentColor="blue">
+            <Theme accentColor="bronze">
                 <Flex direction={"column"} style={{ height: "100vh" }}>
                     {/* Navigation bar */}
-                    <Navigator flexGrow="0" />
+                    {/* <Navigator flexGrow="0" /> */}
 
                     {/* Notification will show here */}
                     {/* <Alert className="fixed top-16 left-0 w-full" /> */}
@@ -35,7 +35,7 @@ export const Root = () => {
                         </AppSuspense>
                     </Box>
 
-                    <Footer />
+                    {/* <Footer /> */}
                 </Flex>
 
                 {/* Application notifications */}
@@ -43,7 +43,7 @@ export const Root = () => {
 
                 {/* Splash */}
                 {/* TODO: Waiting Thang upgrade splash */}
-                <Splash />
+                {/* <Splash /> */}
             </Theme>
         </MotionConfig>
     );
