@@ -1,4 +1,4 @@
-import { Footer, Navigator, Splash, Toast } from "@global/components";
+import { Toast } from "@global/components";
 import { Box, Flex, Theme } from "@radix-ui/themes";
 import { AppSuspense } from "@services/loading";
 import { MotionConfig } from "framer-motion";
