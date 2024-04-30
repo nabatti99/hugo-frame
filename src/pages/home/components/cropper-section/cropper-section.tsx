@@ -31,7 +31,7 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
         frame.src = frameBlobUrl;
         frame.alt = "Frame";
 
-        cropperViewerContainerElement.innerHTML = "";
+        cropperContainerElement.innerHTML = "";
         const cropper = new Cropper(avatar, {
             container: cropperContainerElement,
             template: `
@@ -57,8 +57,6 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
             });
 
             canvas.getContext("2d")!.drawImage(frame, 0, 0, canvas.width, canvas.height);
-            canvas.style.width = "80vw";
-            canvas.style.height = "80vw";
 
             cropperViewerContainerElement.innerHTML = "";
             cropperViewerContainerElement.appendChild(canvas);
