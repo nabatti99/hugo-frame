@@ -1,5 +1,6 @@
 {
-    "name": "template-fe-react",
+    "name": "hugo-frame",
+    "description": "Quick way to set frame for your avatar.",
     "version": "0.1.0",
     "private": true,
     "dependencies": {

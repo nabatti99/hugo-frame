@@ -1,35 +1,42 @@
-import { Center } from "@components";
+import { Center, Icon } from "@components";
 import { Box, Button } from "@radix-ui/themes";
+import { useAppSelector } from "@store";
 import Cropper from "cropperjs";
 import { useEffect, useRef } from "react";
 import { CropperSectionProps } from "./type";
+import { shallowEqual } from "react-redux";
 
-import AvatarPng from "./images/avatar.jpg";
-import FramePng from "./images/frame.png";
 import style from "./style.module.scss";
 
 export const CropperSection = ({ ...props }: CropperSectionProps) => {
+    const { avatarBlobUrl, frameBlobUrl } = useAppSelector((state) => state.home, { equalityFn: shallowEqual });
+
     const cropperContainerElementRef = useRef<HTMLDivElement>(null);
     const cropperViewerContainerElementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (!avatarBlobUrl || !frameBlobUrl) return;
+
         const cropperViewerContainerElement = cropperViewerContainerElementRef.current!;
         const cropperContainerElement = cropperContainerElementRef.current!;
+
+        // Prevent re-render
         if (cropperContainerElement.dataset.loaded === "true") return;
 
         const avatar = new Image();
-        avatar.src = AvatarPng;
+        avatar.src = avatarBlobUrl;
         avatar.alt = "Avatar";
 
         const frame = new Image();
-        frame.src = FramePng;
+        frame.src = frameBlobUrl;
         frame.alt = "Frame";
 
+        cropperViewerContainerElement.innerHTML = "";
         const cropper = new Cropper(avatar, {
             container: cropperContainerElement,
             template: `
                 <cropper-canvas background>
-                    <cropper-image src="${AvatarPng}"></cropper-image>
+                    <cropper-image></cropper-image>
                     <cropper-handle action="move" plain></cropper-handle>
                     <cropper-selection id="cropperSelection">
                         <cropper-grid role="grid" bordered covered></cropper-grid>
@@ -38,6 +45,7 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
             `,
         });
 
+        // Prevent re-render
         cropperContainerElement.dataset.loaded = "true";
 
         const cropperCanvas = cropper.getCropperCanvas()!;
@@ -49,14 +57,14 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
             });
 
             canvas.getContext("2d")!.drawImage(frame, 0, 0, canvas.width, canvas.height);
-            canvas.style.width = "40rem";
+            canvas.style.width = "80vw";
+            canvas.style.height = "80vw";
 
             cropperViewerContainerElement.innerHTML = "";
             cropperViewerContainerElement.appendChild(canvas);
         }
 
-        let timeoutId = 0;
-        cropperCanvas.addEventListener("action", async function (event: any) {
+        async function handleCropperAction(event: any) {
             if (["move", "scale"].includes(event.detail.action)) {
                 clearTimeout(timeoutId);
 
@@ -67,10 +75,21 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
 
                 await renderAvatar();
             }
-        });
+        }
+
+        let timeoutId = 0;
+        cropperCanvas.addEventListener("action", handleCropperAction);
 
         renderAvatar();
-    }, []);
+
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId);
+            cropperCanvas.removeEventListener("action", handleCropperAction);
+
+            // Prevent re-render
+            cropperContainerElement.dataset.loaded = "false";
+        };
+    }, [avatarBlobUrl, frameBlobUrl]);
 
     const handleDownload = () => {
         const canvas = cropperViewerContainerElementRef.current!.querySelector("canvas")!;
@@ -82,12 +101,21 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
     };
 
     return (
-        <Center direction="column" gap="8" {...props}>
-            <Box className={style["container"]}>
-                <Box ref={cropperContainerElementRef} className={style["cropper-container"]} />
-                <Box ref={cropperViewerContainerElementRef} className={style["viewer-container"]}></Box>
-            </Box>
-            <Button onClick={handleDownload}>Download</Button>
+        <Center direction="column" gap="4" {...props}>
+            {avatarBlobUrl && frameBlobUrl ? (
+                <>
+                    <Box className={style["container"]}>
+                        <Box ref={cropperContainerElementRef} className={style["cropper-container"]} />
+                        <Box ref={cropperViewerContainerElementRef} className={style["viewer-container"]} />
+                    </Box>
+                    <Button size="4" variant="surface" onClick={handleDownload}>
+                        <Icon ri="ri-download-2-line" size="4" />
+                        <span>Download</span>
+                    </Button>
+                </>
+            ) : (
+                <p>Choose your avatar and frame</p>
+            )}
         </Center>
     );
 };

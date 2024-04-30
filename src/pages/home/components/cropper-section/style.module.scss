@@ -21,7 +21,8 @@
     }
 
     .viewer-container {
-        width: 40rem;
-        height: 40rem;
+        width: 80vw;
+        height: 80vw;
+        box-shadow: var(--shadow-5);
     }
 }

@@ -1,4 +1,6 @@
-# React Frontend Base
+# HUGO Frame
+
+Quick way to set frame for your avatar.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

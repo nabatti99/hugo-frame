@@ -1,5 +1,5 @@
-export type LayoutBreakpoint = "initial" | "xs" | "sm" | "md" | "lg" | "xl";
+import { Breakpoint } from "@radix-ui/themes/dist/cjs/props";
 
 export type ResponsiveState = {
-	breakpoints: LayoutBreakpoint[];
+    breakpoints: Breakpoint[];
 };
