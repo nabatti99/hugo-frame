@@ -22,7 +22,15 @@ export const Upload = ({ ri, description, className, onChange = () => {}, ...pro
     };
 
     return (
-        <Center direction="column" className={cls(styles["container"], className)} {...props}>
+        <Center
+            direction="column"
+            p={{
+                initial: "4",
+                lg: "8",
+            }}
+            className={cls(styles["container"], className)}
+            {...props}
+        >
             <input ref={fileInputRef} type="file" onChange={handleFileChange} accept="image/png, image/jpeg" />
 
             {imageBlobUrl ? (

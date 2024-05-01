@@ -1,4 +1,4 @@
-import { Toast } from "@global/components";
+import { Footer, Toast } from "@global/components";
 import { Box, Flex, Theme } from "@radix-ui/themes";
 import { AppSuspense } from "@services/loading";
 import { MotionConfig } from "framer-motion";
@@ -35,7 +35,7 @@ export const Root = () => {
                         </AppSuspense>
                     </Box>
 
-                    {/* <Footer /> */}
+                    <Footer />
                 </Flex>
 
                 {/* Application notifications */}

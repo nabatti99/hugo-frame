@@ -1,5 +1,5 @@
 import { Center, Icon } from "@components";
-import { Box, Button } from "@radix-ui/themes";
+import { Box, Button, Flex } from "@radix-ui/themes";
 import { useAppSelector } from "@store";
 import Cropper from "cropperjs";
 import { useEffect, useRef } from "react";
@@ -101,16 +101,16 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
     return (
         <Center direction="column" gap="4" {...props}>
             {avatarBlobUrl && frameBlobUrl ? (
-                <>
+                <Flex direction="column" align="stretch" gap="4">
                     <Box className={style["container"]}>
                         <Box ref={cropperContainerElementRef} className={style["cropper-container"]} />
                         <Box ref={cropperViewerContainerElementRef} className={style["viewer-container"]} />
                     </Box>
-                    <Button size="4" variant="surface" onClick={handleDownload}>
-                        <Icon ri="ri-download-2-line" size="4" />
+                    <Button size="4" variant="solid" onClick={handleDownload}>
+                        <Icon ri="ri-download-line" size="4" />
                         <span>Download</span>
                     </Button>
-                </>
+                </Flex>
             ) : (
                 <p>Choose your avatar and frame</p>
             )}
