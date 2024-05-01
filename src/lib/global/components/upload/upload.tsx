@@ -3,21 +3,25 @@ import { Center } from "@components/center";
 import { Icon } from "@components/icon";
 import { Flex, Text } from "@radix-ui/themes";
 import cls from "classnames";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UploadProps } from "./type";
 
 import styles from "./style.module.scss";
 
-export const Upload = ({ ri, description, className, onChange = () => {}, ...props }: UploadProps) => {
+export const Upload = ({ ri, description, className, imageUrl, onChange = () => {}, ...props }: UploadProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
+    const [uploadImageUrl, setUploadImageUrl] = useState<string | undefined>(imageUrl);
+
+    useEffect(() => {
+        setUploadImageUrl(imageUrl);
+    }, [imageUrl]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const blobUrl = URL.createObjectURL(file);
-            setImageBlobUrl(blobUrl);
-            onChange(blobUrl);
+            const Url = URL.createObjectURL(file);
+            setUploadImageUrl(Url);
+            onChange(Url);
         }
     };
 
@@ -33,9 +37,9 @@ export const Upload = ({ ri, description, className, onChange = () => {}, ...pro
         >
             <input ref={fileInputRef} type="file" onChange={handleFileChange} accept="image/png, image/jpeg" />
 
-            {imageBlobUrl ? (
+            {uploadImageUrl ? (
                 <Center direction="column" gap="2" onClick={() => fileInputRef.current!.click()}>
-                    <Image src={imageBlobUrl} alt="upload" width="12rem" height="12rem" objectFit="contain" />
+                    <Image src={uploadImageUrl} alt="upload" width="12rem" height="12rem" objectFit="contain" />
                     <Flex align="center" gap="1">
                         <Icon ri="ri-restart-line" size="3" color="gray" />
                         <Text color="gray">Choose another file</Text>

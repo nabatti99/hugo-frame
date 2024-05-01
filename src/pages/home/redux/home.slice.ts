@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { HomeState } from "./type";
-import { setAvatarBlobUrlCase, setFrameBlobUrlCase } from "./home.reducers";
+import { setAvatarUrlCase, setFrameUrlCase } from "./home.reducers";
 
 const initialState: HomeState = {};
 
@@ -9,13 +9,13 @@ export const homeSlice = createSlice({
     name: "HOME_STATE",
     initialState,
     reducers: {
-        setFrameBlobUrl: setFrameBlobUrlCase,
-        setAvatarBlobUrl: setAvatarBlobUrlCase,
+        setFrameUrl: setFrameUrlCase,
+        setAvatarUrl: setAvatarUrlCase,
     },
 });
 
 // Export actions
-export const { setFrameBlobUrl, setAvatarBlobUrl } = homeSlice.actions;
+export const { setFrameUrl, setAvatarUrl } = homeSlice.actions;
 
 // Export reducer
 export const homeReducer = homeSlice.reducer;

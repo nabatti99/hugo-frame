@@ -1,4 +1,4 @@
 export type HomeState = {
-    frameBlobUrl?: string;
-    avatarBlobUrl?: string;
+    frameUrl?: string;
+    avatarUrl?: string;
 };

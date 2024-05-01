@@ -1,10 +1,10 @@
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { HomeState } from "./type";
 
-export const setFrameBlobUrlCase: CaseReducer<HomeState, PayloadAction<string | undefined>> = (state, action) => {
-    state.frameBlobUrl = action.payload;
+export const setFrameUrlCase: CaseReducer<HomeState, PayloadAction<string | undefined>> = (state, action) => {
+    state.frameUrl = action.payload;
 };
 
-export const setAvatarBlobUrlCase: CaseReducer<HomeState, PayloadAction<string | undefined>> = (state, action) => {
-    state.avatarBlobUrl = action.payload;
+export const setAvatarUrlCase: CaseReducer<HomeState, PayloadAction<string | undefined>> = (state, action) => {
+    state.avatarUrl = action.payload;
 };

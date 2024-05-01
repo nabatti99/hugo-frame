@@ -1,5 +1,4 @@
-import { Icon, Image, LayoutGrid, Link } from "@components";
-import { LogoImg } from "@global/images";
+import { Icon, Link } from "@components";
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import cls from "classnames";
 import { FooterProps } from "./type";

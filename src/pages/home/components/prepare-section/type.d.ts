@@ -1,3 +1,3 @@
-import { CenterProps } from "@components/center/type";
+import { FlexProps } from "@radix-ui/themes";
 
-export type CropperSectionProps = CenterProps;
+export type CropperSectionProps = FlexProps;

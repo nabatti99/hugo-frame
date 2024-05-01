@@ -9,13 +9,13 @@ import { shallowEqual } from "react-redux";
 import style from "./style.module.scss";
 
 export const CropperSection = ({ ...props }: CropperSectionProps) => {
-    const { avatarBlobUrl, frameBlobUrl } = useAppSelector((state) => state.home, { equalityFn: shallowEqual });
+    const { avatarUrl, frameUrl } = useAppSelector((state) => state.home, { equalityFn: shallowEqual });
 
     const cropperContainerElementRef = useRef<HTMLDivElement>(null);
     const cropperViewerContainerElementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!avatarBlobUrl || !frameBlobUrl) return;
+        if (!avatarUrl || !frameUrl) return;
 
         const cropperViewerContainerElement = cropperViewerContainerElementRef.current!;
         const cropperContainerElement = cropperContainerElementRef.current!;
@@ -24,11 +24,11 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
         if (cropperContainerElement.dataset.loaded === "true") return;
 
         const avatar = new Image();
-        avatar.src = avatarBlobUrl;
+        avatar.src = avatarUrl;
         avatar.alt = "Avatar";
 
         const frame = new Image();
-        frame.src = frameBlobUrl;
+        frame.src = frameUrl;
         frame.alt = "Frame";
 
         cropperContainerElement.innerHTML = "";
@@ -87,7 +87,7 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
             // Prevent re-render
             cropperContainerElement.dataset.loaded = "false";
         };
-    }, [avatarBlobUrl, frameBlobUrl]);
+    }, [avatarUrl, frameUrl]);
 
     const handleDownload = () => {
         const canvas = cropperViewerContainerElementRef.current!.querySelector("canvas")!;
@@ -100,7 +100,7 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
 
     return (
         <Center direction="column" gap="4" {...props}>
-            {avatarBlobUrl && frameBlobUrl ? (
+            {avatarUrl && frameUrl ? (
                 <Flex direction="column" align="stretch" gap="4">
                     <Box className={style["container"]}>
                         <Box ref={cropperContainerElementRef} className={style["cropper-container"]} />
@@ -112,7 +112,7 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
                     </Button>
                 </Flex>
             ) : (
-                <p>Choose your avatar and frame</p>
+                <p>Choose your avatar and frame first!</p>
             )}
         </Center>
     );

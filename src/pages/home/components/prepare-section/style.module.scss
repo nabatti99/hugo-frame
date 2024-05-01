@@ -1,3 +1,42 @@
 .upload {
     min-width: 16rem;
 }
+
+.suggestion {
+    align-self: stretch;
+
+    & > h2 {
+        text-transform: uppercase;
+    }
+
+    .suggestion-list {
+        background: var(--accent-2);
+        border-radius: var(--radius-4);
+        border: 1px solid var(--accent-7);
+        overflow: auto;
+
+        .suggestion-item {
+            cursor: var(--cursor-button);
+
+            & > i {
+                color: var(--accent-9);
+            }
+
+            &:hover {
+                background: var(--accent-3);
+            }
+
+            &:active {
+                background: var(--accent-4);
+            }
+
+            input {
+                display: none;
+            }
+
+            img {
+                border: 1px solid var(--accent-9);
+            }
+        }
+    }
+}
