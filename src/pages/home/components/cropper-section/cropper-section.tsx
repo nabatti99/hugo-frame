@@ -24,10 +24,12 @@ export const CropperSection = ({ ...props }: CropperSectionProps) => {
         if (cropperContainerElement.dataset.loaded === "true") return;
 
         const avatar = new Image();
+        avatar.crossOrigin = "anonymous"; // This is important to prevent tainted canvas
         avatar.src = avatarUrl;
         avatar.alt = "Avatar";
 
         const frame = new Image();
+        frame.crossOrigin = "anonymous"; // This is important to prevent tainted canvas
         frame.src = frameUrl;
         frame.alt = "Frame";
 

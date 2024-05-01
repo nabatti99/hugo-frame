@@ -15,7 +15,7 @@ export const HomePage = ({}: HomePageProps) => {
         <>
             <TileBackground height="100%">
                 <Flex direction="column" align="stretch" gap="5">
-                    <Section size="2" style={{ backgroundImage: `url(${CrystalPng})` }} className={styles["header"]}>
+                    <Section size="2" style={{ backgroundImage: `url(${CrystalPng})`, borderBottom: "2px solid var(--accent-7)" }} className={styles["header"]}>
                         <Container>
                             <Welcome />
                         </Container>

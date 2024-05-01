@@ -19,9 +19,9 @@ export const Upload = ({ ri, description, className, imageUrl, onChange = () => 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const Url = URL.createObjectURL(file);
-            setUploadImageUrl(Url);
-            onChange(Url);
+            const url = URL.createObjectURL(file);
+            setUploadImageUrl(url);
+            onChange(url);
         }
     };
 

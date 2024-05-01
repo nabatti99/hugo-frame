@@ -1,11 +1,13 @@
-import { Center, Icon, Image } from "@components";
+import { Center, Icon, Image as ImageUI } from "@components";
 import { Upload } from "@global/components";
 import { setAvatarUrl, setFrameUrl } from "@pages/home/redux";
 import { useAppDispatch, useAppSelector } from "@store";
 import { CropperSectionProps } from "./type";
-
 import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import style from "./style.module.scss";
+import { pushErrorNotification } from "@services/notification";
+
+import { useEffect } from "react";
 
 export const PrepareSection = ({ ...props }: CropperSectionProps) => {
     const dispatch = useAppDispatch();
@@ -13,6 +15,45 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
     const { frameUrl, avatarUrl } = useAppSelector((state) => state.home);
 
     const frameSuggestionUrls = [...Array(1).keys()].map((index) => "https://i.imgur.com/e80Rtjs.png");
+
+    useEffect(() => {
+        if (!frameUrl) return;
+
+        const image = new Image();
+        image.src = frameUrl;
+
+        image.addEventListener(
+            "load",
+            (event) => {
+                const image = event.target as HTMLImageElement;
+                const imageWidth = image.naturalWidth;
+                const imageHeight = image.naturalHeight;
+
+                let isValid = true;
+
+                if (imageWidth !== imageHeight) {
+                    dispatch(
+                        pushErrorNotification({
+                            message: "Frame image is not square. Please choose another one.",
+                        })
+                    );
+                    isValid = false;
+                }
+
+                if (imageWidth < 400) {
+                    dispatch(
+                        pushErrorNotification({
+                            message: "Frame image is too small. Please choose another one.",
+                        })
+                    );
+                    isValid = false;
+                }
+
+                dispatch(setFrameUrl(isValid ? image.src : undefined));
+            },
+            { once: true }
+        );
+    }, [dispatch, frameUrl]);
 
     return (
         <Flex direction="column" align="center" gap="8" {...props}>
@@ -55,7 +96,7 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                                 className={style["suggestion-item"]}
                                 onClick={() => dispatch(setFrameUrl(frameSuggestionUrl))}
                             >
-                                <Image src={frameSuggestionUrl} alt="upload" width="8rem" height="8rem" objectFit="contain" />
+                                <ImageUI src={frameSuggestionUrl} alt="upload" width="8rem" height="8rem" objectFit="contain" />
                                 <Text size="1" weight="medium" color="gray" align="center">
                                     HEROES COMPANY CAMPING 2024 - THE CELESTIAL EUPHORIA
                                 </Text>
