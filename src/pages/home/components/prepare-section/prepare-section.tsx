@@ -1,20 +1,23 @@
 import { Center, Icon, Image as ImageUI } from "@components";
 import { Upload } from "@global/components";
 import { setAvatarUrl, setFrameUrl } from "@pages/home/redux";
-import { useAppDispatch, useAppSelector } from "@store";
-import { CropperSectionProps } from "./type";
 import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
-import style from "./style.module.scss";
+import { useDriveFilesListAPI } from "@services/google";
 import { pushErrorNotification } from "@services/notification";
-
+import { useAppDispatch, useAppSelector } from "@store";
 import { useEffect } from "react";
+import { CropperSectionProps } from "./type";
+
+import style from "./style.module.scss";
+import { getDriveLh3Url } from "@utilities";
 
 export const PrepareSection = ({ ...props }: CropperSectionProps) => {
     const dispatch = useAppDispatch();
 
-    const { frameUrl, avatarUrl } = useAppSelector((state) => state.home);
+    const { isLoading: isLoadingDriveFilesListAPI, data: files } = useDriveFilesListAPI("");
+    console.log({ isLoadingDriveFilesListAPI, files });
 
-    const frameSuggestionUrls = [...Array(1).keys()].map((index) => "https://i.imgur.com/e80Rtjs.png");
+    const { frameUrl, avatarUrl } = useAppSelector((state) => state.home);
 
     useEffect(() => {
         if (!frameUrl) return;
@@ -85,7 +88,7 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                     </Heading>
 
                     <Grid columns={`repeat(auto-fill, minmax(16rem, 1fr))`} className={style["suggestion-list"]}>
-                        {frameSuggestionUrls.map((frameSuggestionUrl) => (
+                        {files.map((file) => (
                             <Center
                                 direction="column"
                                 gap="2"
@@ -94,9 +97,9 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                                     lg: "4",
                                 }}
                                 className={style["suggestion-item"]}
-                                onClick={() => dispatch(setFrameUrl(frameSuggestionUrl))}
+                                onClick={() => dispatch(setFrameUrl(getDriveLh3Url(file.id)))}
                             >
-                                <ImageUI src={frameSuggestionUrl} alt="upload" width="8rem" height="8rem" objectFit="contain" />
+                                <ImageUI src={file.thumbnailLink} alt="upload" width="8rem" height="8rem" objectFit="contain" />
                                 <Text size="1" weight="medium" color="gray" align="center">
                                     HEROES COMPANY CAMPING 2024 - THE CELESTIAL EUPHORIA
                                 </Text>

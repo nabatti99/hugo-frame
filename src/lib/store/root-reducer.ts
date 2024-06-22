@@ -5,6 +5,7 @@ import { loadingReducer } from "@services/loading";
 import { localStorageReducer } from "@services/local-storage";
 import { notificationReducer } from "@services/notification";
 import { responsiveReducer } from "@services/responsive";
+import { googleReducer } from "@services/google/redux";
 import { homeReducer } from "@pages/home/redux";
 
 // Combine all service reducers
@@ -16,6 +17,7 @@ export const rootReducer = {
     language: languageReducer,
     loading: loadingReducer,
     responsive: responsiveReducer,
+    google: googleReducer,
 
     // Page reducers
     home: homeReducer,

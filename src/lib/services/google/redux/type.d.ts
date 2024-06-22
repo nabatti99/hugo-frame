@@ -1,0 +1,3 @@
+type GoogleState = {
+    gApiClient: any;
+};
