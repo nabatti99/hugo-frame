@@ -5,17 +5,17 @@ import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { useDriveFilesListAPI } from "@services/google";
 import { pushErrorNotification } from "@services/notification";
 import { useAppDispatch, useAppSelector } from "@store";
+import { getDriveLh3Url } from "@utilities";
 import { useEffect } from "react";
 import { CropperSectionProps } from "./type";
 
 import style from "./style.module.scss";
-import { getDriveLh3Url } from "@utilities";
 
 export const PrepareSection = ({ ...props }: CropperSectionProps) => {
     const dispatch = useAppDispatch();
 
-    const { isLoading: isLoadingDriveFilesListAPI, data: files } = useDriveFilesListAPI("");
-    console.log({ isLoadingDriveFilesListAPI, files });
+    const { data: files } = useDriveFilesListAPI("");
+    files.sort((file1, file2) => (new Date(file1.modifiedTime) > new Date(file2.modifiedTime) ? -1 : 1));
 
     const { frameUrl, avatarUrl } = useAppSelector((state) => state.home);
 
@@ -70,7 +70,7 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                 <Upload
                     flexShrink="0"
                     ri="ri-image-add-line"
-                    description="Choose your frame"
+                    description="Frame (2000px x 2000px)"
                     className={style["upload"]}
                     imageUrl={frameUrl}
                     onChange={(imageUrl) => dispatch(setFrameUrl(imageUrl))}
@@ -90,6 +90,7 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                     <Grid columns={`repeat(auto-fill, minmax(16rem, 1fr))`} className={style["suggestion-list"]}>
                         {files.map((file) => (
                             <Center
+                                key={file.id}
                                 direction="column"
                                 gap="2"
                                 p={{
@@ -101,7 +102,10 @@ export const PrepareSection = ({ ...props }: CropperSectionProps) => {
                             >
                                 <ImageUI src={file.thumbnailLink} alt="upload" width="8rem" height="8rem" objectFit="contain" />
                                 <Text size="1" weight="medium" color="gray" align="center">
-                                    HEROES COMPANY CAMPING 2024 - THE CELESTIAL EUPHORIA
+                                    {file.name
+                                        .split(".")
+                                        .filter((word: string) => word !== file.fileExtension)
+                                        .join(".")}
                                 </Text>
                             </Center>
                         ))}

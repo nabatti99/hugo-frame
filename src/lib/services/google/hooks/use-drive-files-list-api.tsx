@@ -18,7 +18,7 @@ export function useDriveFilesListAPI(initialQueryString?: string) {
             // Get file from GG Drive as a Zip file
             const rawResponse = await gApiClient.drive.files.list({
                 q: [`'${DRIVE_FOLDER_ID}' in parents`, "trashed=false", queryString].filter(Boolean).join(" and "),
-                fields: "nextPageToken, files(id, name, thumbnailLink, mimeType, size, modifiedTime, createdTime)",
+                fields: "nextPageToken, files(id, name, fileExtension, thumbnailLink, mimeType, size, modifiedTime, createdTime)",
                 spaces: "drive",
             });
 
